@@ -22,6 +22,7 @@ namespace settings
 				MakeSetting("fPositionX:Display", positionX),
 				MakeSetting("fPositionY:Display", positionY),
 				MakeSetting("fScale:Display", scale),
+				MakeSetting("fOpacity:Display", opacity),
 				MakeSetting("uShape:Display", shape),
 				MakeSetting("bShowOnGameStart:Display", showOnGameStart),
 				MakeSetting("sControlHideTip:Display", controlHideTip),
@@ -54,6 +55,7 @@ namespace settings
 			positionX = iniSettingCollection->GetSetting<float>("fPositionX:Display");
 			positionY = iniSettingCollection->GetSetting<float>("fPositionY:Display");
 			scale = iniSettingCollection->GetSetting<float>("fScale:Display");
+			opacity = iniSettingCollection->GetSetting<float>("fOpacity:Display");
 			shape = iniSettingCollection->GetSetting<std::uint32_t>("uShape:Display");
 			showOnGameStart = iniSettingCollection->GetSetting<bool>("bShowOnGameStart:Display");
 			controlHideTip = iniSettingCollection->GetSetting<const char*>("sControlHideTip:Display");

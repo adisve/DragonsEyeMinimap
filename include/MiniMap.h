@@ -114,13 +114,24 @@ namespace DEM
 		void PreRender();
 		void RefreshPlatform();
 
-		// Controls
-		bool IsVisible() const
+		void SetDisplayInfoProperties(float scale, float opacity)
 		{
-			RE::GFxValue::DisplayInfo displayInfo;
-			displayObj.GetDisplayInfo(&displayInfo);
+			if (displayObj.GetDisplayInfo(&displayInfo)) {
+				displayInfo.SetScale(displayInfo.GetXScale() * scale, displayInfo.GetYScale() * scale);
+				displayInfo.SetAlpha(opacity * 100.0F);
+				displayObj.SetDisplayInfo(displayInfo);
+			} else {
+				logger::error("Failed to get DisplayInfo for displayObj");
+			}
+		}
 
-			return displayInfo.GetVisible();
+		// Controls
+		bool IsVisible()
+		{
+			if (displayObj.GetDisplayInfo(&displayInfo)) {
+				return displayInfo.GetVisible();
+			}
+			return false;
 		}
 
 		bool IsShown() const
@@ -159,17 +170,11 @@ namespace DEM
 			if (displayObj.HasMember("Minimap"))
 			{
 				displayObj.Invoke("Minimap", settings::display::positionX, settings::display::positionY);
-
-				float width = displayObj.GetMember("_width").GetNumber();
-				displayObj.SetMember("_width", width * settings::display::scale);
-
-				float height = displayObj.GetMember("_height").GetNumber();
-				displayObj.SetMember("_height", height * settings::display::scale);
+				SetDisplayInfoProperties(settings::display::scale, settings::display::opacity);
 			}
 		}
 
 		void InitLocalMap();
-
 		void UpdateFogOfWar();
 		void RenderOffScreen();
 		void ClearTerrainRenderPasses(RE::NiPointer<RE::NiAVObject>& a_object);
@@ -180,6 +185,7 @@ namespace DEM
 
 		// members
 		IUI::GFxDisplayObject displayObj;
+		RE::GFxValue::DisplayInfo displayInfo;
 
 		Shape shape = static_cast<Shape>(settings::display::shape);
 

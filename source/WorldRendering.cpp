@@ -312,13 +312,13 @@ namespace DEM
 			return;
 		}
 
-		for (RE::NiPointer<RE::NiAVObject>& object : node->children) if (object)
+		for (RE::NiPointer<RE::NiAVObject>& object : node->GetChildren()) if (object)
 		{
-			if (object->flags.any(RE::NiAVObject::Flag::kRenderUse))
+			if (object->GetFlags().any(RE::NiAVObject::Flag::kRenderUse))
 			{
 				if (RE::BSGeometry* geometry = object->AsGeometry())
 				{
-					auto shaderProp = static_cast<RE::BSShaderProperty*>(geometry->properties[RE::BSGeometry::States::kEffect].get());
+					auto shaderProp = static_cast<RE::BSShaderProperty*>(geometry->GetGeometryRuntimeData().properties[RE::BSGeometry::States::kEffect].get());
 					if (shaderProp)
 					{
 						shaderProp->DoClearRenderPasses();
@@ -357,8 +357,8 @@ namespace DEM
 										ClearTerrainRenderPasses(scene);
 									}
 
-									bool isCellSceneHidden = scene->flags.any(RE::NiAVObject::Flag::kHidden);
-									scene->flags.reset(RE::NiAVObject::Flag::kHidden);
+									bool isCellSceneHidden = scene->GetFlags().any(RE::NiAVObject::Flag::kHidden);
+									scene->GetFlags().reset(RE::NiAVObject::Flag::kHidden);
 
 									cullJobDesc.scene = scene;
 
@@ -366,7 +366,7 @@ namespace DEM
 
 									if (isCellSceneHidden)
 									{
-										scene->flags.set(RE::NiAVObject::Flag::kHidden);
+										scene->GetFlags().set(RE::NiAVObject::Flag::kHidden);
 									}
 								}
 							}

@@ -22,6 +22,7 @@ namespace settings
 		inline float positionX = 0.65F;
 		inline float positionY = 0.2F;
 		inline float scale = 1.0F;
+		inline float opacity = 1.0F;
 		inline std::uint32_t shape = 0;
 		inline bool showOnGameStart = true;
 		inline const char* controlHideTip = "Hold to control/tap to hide";
